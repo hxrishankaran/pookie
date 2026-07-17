@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>POOKIE TRAVELS - Book Your Ride</title>
+    <style>
+        :root {
+            --primary-color: #ff4a75;
+            --secondary-color: #111111;
+            --background-color: #f7f9fc;
+            --card-color: #ffffff;
+            --text-color: #333333;
+            --border-radius: 12px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--background-color);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .logo span {
+            color: var(--primary-color);
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+            font-size: 14px;
+        }
+
+        .main-container {
+            display: flex;
+            flex: 1;
+            max-width: 1200px;
+            width: 100%;
+            margin: 30px auto;
+            gap: 30px;
+            padding: 0 20px;
+        }
+
+        .booking-panel {
+            flex: 1;
+            background: var(--card-color);
+            padding: 30px;
+            border-radius: var(--border-radius);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+        }
+
+        /* Upgraded Live Map Container */
+        .map-panel {
+            flex: 1.5;
+            background: #e5e9f0;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            position: relative;
+            min-height: 400px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+        }
+
+        .map-panel iframe {
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            font-size: 22px;
+            color: var(--secondary-color);
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 15px;
+            transition: border 0.3s;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        .ride-options {
+            margin-top: 25px;
+        }
+
+        .ride-option {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            border: 2px solid #eee;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .ride-option:hover {
+            border-color: #ddd;
+        }
+
+        .ride-option input[type="radio"] {
+            margin-right: 15px;
+            accent-color: var(--primary-color);
+            transform: scale(1.2);
+        }
+
+        .ride-details {
+            flex-grow: 1;
+        }
+
+        .ride-name {
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .ride-eta {
+            font-size: 12px;
+            color: #777;
+            margin-top: 2px;
+        }
+
+        .ride-price {
+            font-weight: bold;
+            font-size: 16px;
+            color: var(--secondary-color);
+        }
+
+        .ride-option.selected {
+            border-color: var(--primary-color);
+            background-color: #fff5f7;
+        }
+
+        .book-btn {
+            width: 100%;
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 15px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background 0.2s;
+        }
+
+        .book-btn:hover {
+            background-color: #222;
+        }
+
+        footer {
+            background-color: var(--secondary-color);
+            color: #777;
+            text-align: center;
+            padding: 15px;
+            font-size: 12px;
+            margin-top: auto;
+        }
+
+        @media (max-width: 768px) {
+            .main-container {
+                flex-direction: column-reverse;
+                margin: 10px auto;
+            }
+            .map-panel {
+                min-height: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">POOKIE <span>TRAVELS</span></div>
+        <nav>
+            <a href="#">Rides</a>
+            <a href="#">Help</a>
+            <a href="#">Profile</a>
+        </nav>
+    </header>
+
+    <div class="main-container">
+        <!-- Booking Interface -->
+        <div class="booking-panel">
+            <h2>Where can we take you?</h2>
+            
+            <form id="bookingForm" action="https://formspree.io/f/xqerpwba" method="POST">
+                <input type="hidden" name="_to" value="hxrishankaran@gmail.com">
+                
+                <div class="input-group">
+                    <label for="pickup">Pickup Location</label>
+                    <input type="text" id="pickup" name="Pickup Location" placeholder="Enter pickup location" required>
+                </div>
+
+                <div class="input-group">
+                    <label for="dropoff">Dropoff Location</label>
+                    <input type="text" id="dropoff" name="Dropoff Location" placeholder="Enter destination" required>
+                </div>
+
+                <div class="ride-options">
+                    <label style="font-weight: 600; font-size: 14px; display: block; margin-bottom: 10px;">Select Ride Type</label>
+                    
+                    <!-- Option 1 -->
+                    <label class="ride-option selected" for="pookieMini">
+                        <input type="radio" id="pookieMini" name="Selected Ride" value="Pookie Mini ($12.50)" checked onclick="selectOption(this)">
+                        <div class="ride-details">
+                            <div class="ride-name">Pookie Mini</div>
+                            <div class="ride-eta">Affordable, everyday rides • 3 min away</div>
+                        </div>
+                        <div class="ride-price">$12.50</div>
+                    </label>
+
+                    <!-- Option 2 -->
+                    <label class="ride-option" for="pookieSedan">
+                        <input type="radio" id="pookieSedan" name="Selected Ride" value="Pookie Sedan ($18.20)" onclick="selectOption(this)">
+                        <div class="ride-details">
+                            <div class="ride-name">Pookie Sedan</div>
+                            <div class="ride-eta">Comfortable newer cars • 5 min away</div>
+                        </div>
+                        <div class="ride-price">$18.20</div>
+                    </label>
+
+                    <!-- Option 3 -->
+                    <label class="ride-option" for="pookieSuv">
+                        <input type="radio" id="pookieSuv" name="Selected Ride" value="Pookie SUV ($26.00)" onclick="selectOption(this)">
+                        <div class="ride-details">
+                            <div class="ride-name">Pookie SUV</div>
+                            <div class="ride-eta">Spacious 6-seaters • 7 min away</div>
+                        </div>
+                        <div class="ride-price">$26.00</div>
+                    </label>
+                </div>
+
+                <button type="submit" class="book-btn">Request Ride Now</button>
+            </form>
+        </div>
+
+        <!-- Integrated Live Google Map View -->
+        <div class="map-panel">
+            <iframe 
+                src="www.google.com/maps"
+                allowfullscreen="" 
+                loading="lazy">
+            </iframe>
+        </div>
+    </div>
+
+    <footer>
+        &copy; 2026 POOKIE TRAVELS Technologies Inc. All rights reserved.
+    </footer>
+
+    <script>
+        function selectOption(radio) {
+            document.querySelectorAll('.ride-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            radio.closest('.ride-option').classList.add('selected');
+        }
+    </script>
+</body>
+</html>
